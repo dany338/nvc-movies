@@ -22,6 +22,9 @@ import {
 const initialState = {
   data: [],
   genres: [],
+  filter: {
+    query: '',
+  },
   movieSelected: null,
   discoverGenres: [],
   totalPages: 0,
@@ -168,9 +171,13 @@ const movie = (state = initialState, { type, payload }) => {
     }
 
     case MOVIES_SEARCH_LIST_INIT: {
+      const filter = {
+        query: payload
+      };
       return {
         ...state,
         error: '',
+        filter,
         isLoading: true,
       };
     }

@@ -9,8 +9,7 @@ const Sidebar = () => {
   return (
     <Container>
       <SidebarRow selected path="/" icon={'home'} title="Home" />
-      <SidebarRow path="/" icon={'whatshot'} title="Treding" />
-      <SidebarRow path="/" icon={'subscriptions'} title="Subscription" />
+      <SidebarRow path="/" icon={'subscriptions'} title="Movies Preferred" />
       <hr />
     </Container>
   )

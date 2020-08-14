@@ -127,13 +127,13 @@ export const getPopularMoviesRequest = page => {
   };
 };
 
-export const getSearchMoviesRequest = page => {
+export const getSearchMoviesRequest = (page, query) => {
   return async dispatch => {
-    dispatch(moviesSearchListInit());
+    dispatch(moviesSearchListInit(query));
     try {
-      const data = await MoviesServices.apiMovies.searchMovies(page);
+      const data = await MoviesServices.apiMovies.searchMovies(page, query);
       if(typeof data === 'object' && Array.isArray(data.results)) {
-        dispatch(moviesSearchListSuccess(data.results, data.total_pages, data.total_results));
+        dispatch(moviesSearchListSuccess(data.results, data.total_pages, data.total_results, page));
       } else if(typeof data === 'string') {
         dispatch(moviesSearchListError('An error was generated please consult the administrator!'));
       }

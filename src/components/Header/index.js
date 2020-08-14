@@ -5,11 +5,19 @@ import { Container } from './styled';
 /* Assets */
 import assets from '../../assets';
 /* Hooks */
-import { useLogin } from '../../infraestructure/hooks';
+import { useMovies } from '../../infraestructure/hooks';
 
 const Header = () => {
   const [ inputSearch, setInputSearch ] = useState('');
-  const { username } = useLogin();
+  const { getSearchMoviesRequest } = useMovies();
+
+  const handleChangeQuery = async e => {
+    const { value } = e.currentTarget;
+    const { msg, err } = await getSearchMoviesRequest(1, value);
+    if(!err) {
+      console.log('sin error');
+    }
+  };
 
   return (
     <Container>
@@ -22,8 +30,8 @@ const Header = () => {
         />
       </div>
       <div className="header__input">
-        <input onChange={(e) => setInputSearch(e.target.value)} placeholder="Search" type="text" value={inputSearch} name="search" />
-        <i className="material-icons header__inputButton">search</i>
+        <input onChange={(e) => handleChangeQuery(e)} placeholder="Search" type="text" value={inputSearch} name="search" />
+        <i className="material-icons header__inputButton" onClick={}>search</i>
       </div>
       <div className="header__icons">
         <i className="material-icons header__icon">apps</i>

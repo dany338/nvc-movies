@@ -3,7 +3,6 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import firebase from 'firebase';
 /* Components */
 import CardMovie from '../../components/CardMovie';
-import ModalSubscribe from '../../components/ModalSubscribe';
 /* Style Components */
 import { Container } from './styled';
 /* Hooks */
@@ -28,20 +27,6 @@ const Movies = () => {
 
   const handleCloseModal = () => {
     setVisible(false);
-  };
-
-  const handleOpenModal = (e, id, title, image) => {
-    e.preventDefault();
-    setVisible(true);
-    setMovieSelected({ moviedb_id: id, name: title, moviedb_image: image });
-    db.collection('movies').add({
-      movie_id: id,
-      movie_title: title,
-      uid: 1,
-      date: Date.now(),
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    e.stopPropagation();
   };
 
   const handleLoadMore = async () => {
@@ -72,7 +57,7 @@ const Movies = () => {
           </div>
         ) : (
           <>
-            {data.map((movie) => <CardMovie key={`movie-${movie.id}`} {...movie} onOpenModal={handleOpenModal} /> )}
+            {data.map((movie) => <CardMovie key={`movie-${movie.id}`} {...movie} /> )}
           </>
         )}
       </div>
@@ -82,7 +67,6 @@ const Movies = () => {
           <h4>LOAD MORE...</h4>
         </div>
       )}
-      <ModalSubscribe visible={visible} onClose={handleCloseModal} movie={movieSelected} />
     </Container>
   )
 };

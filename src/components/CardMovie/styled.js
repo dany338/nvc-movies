@@ -30,42 +30,6 @@ export const Container = styled(Link)`
     margin-left: 15px;
   }
 
-  .movie__subscriptions {
-    display: flex;
-    margin-left: 15px;
-    --text-opacity: 1;
-    color: #2b6cb0;
-    color: rgba(43,108,176,var(--text-opacity));
-    cursor: pointer;
-    --border-opacity: 1;
-    border-color: rgba(66,153,225,var(--border-opacity));
-    border-radius: .25rem;
-    background-color: transparent;
-    border: 0 solid #e2e8f0;
-    border-width: 1px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
-    justify-content: center !important;
-    align-items: center !important;
-    margin-left: 0px;
-  }
-
-  .movie__subscriptions:hover {
-    --text-opacity: 1;
-    color: #fff;
-    color: rgba(255,255,255,var(--text-opacity));
-    border-color: transparent;
-    --bg-opacity: 1;
-    background-color: rgba(66,153,225,var(--bg-opacity));
-  }
-
-  .movie__subscriptions > h4 {
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
-
   .video__text > h4 {
     font-size: 14px;
     margin-bottom: 5px;
@@ -89,6 +53,21 @@ export const Container = styled(Link)`
     color: gray;
   }
 
+  .movie__roll__over {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    border-radius: 8px;
+    visibility: hidden;
+    opacity: 0;
+    transition: linear .2s;
+    backdrop-filter: blur(20px);
+  }
+
   .movie__avatar {
     height: 30px !important;
     width: 30px !important;
@@ -99,6 +78,11 @@ export const Container = styled(Link)`
     transform: scale(1.05);
     box-shadow: 0 25px 50px -12px rgba(0,0,0,.25);
     cursor: pointer;
+
+    .movie__roll__over {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 `;
 
