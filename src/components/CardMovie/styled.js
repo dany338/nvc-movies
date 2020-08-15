@@ -82,6 +82,8 @@ export const Container = styled(Link)`
     .movie__roll__over {
       visibility: visible;
       opacity: 1;
+      color: #fff;
+      padding: 15px
     }
   }
 `;

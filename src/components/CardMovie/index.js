@@ -12,6 +12,8 @@ import { Container } from './styled';
 import { useMovies } from '../../infraestructure/hooks';
 /* Constants */
 import { BASE_PATH_IMG } from '../../infraestructure/config/const';
+/* Assets */
+import assets from '../../assets';
 
 dayjs.locale('es');
 dayjs.extend(relativeTime);
@@ -63,7 +65,7 @@ const CardMovie = ({ id, poster_path, backdrop_path, title, release_date, vote_c
         <>
           <img
             className="movie__thumbnail"
-            src={`${BASE_PATH_IMG}/w500${poster_path}`}
+            src={poster_path ? (`${BASE_PATH_IMG}/w500${poster_path}`) : (assets.logo)}
             alt="Movie Show Time Finder"
           />
           <div className="movie__info">
@@ -75,11 +77,8 @@ const CardMovie = ({ id, poster_path, backdrop_path, title, release_date, vote_c
             <div className="video__text">
               <h4>{title}</h4>
               <p>{genres.length > 0 && genres.join(', ')}</p>
-              <div>
-                <ReactStars {...rateConfig} /> • {media}
-              </div>
               <p>
-                {vote_count} votes • {dayjs().from(dayjs(release_date)) } • Subscribers 0
+                {vote_count} votes • {dayjs().from(dayjs(release_date)) }
               </p>
             </div>
             <div className="movie__roll__over">
@@ -89,7 +88,7 @@ const CardMovie = ({ id, poster_path, backdrop_path, title, release_date, vote_c
                 <ReactStars {...rateConfig} /> • {media}
               </div>
               <p>
-                {vote_count} votes • {dayjs().from(dayjs(release_date)) } • Subscribers 0
+                {vote_count} votes • {dayjs().from(dayjs(release_date)) }
               </p>
             </div>
           </div>

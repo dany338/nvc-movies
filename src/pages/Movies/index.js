@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import InfiniteScroll from "react-infinite-scroll-component";
 import firebase from 'firebase';
 /* Components */
 import CardMovie from '../../components/CardMovie';
@@ -7,30 +8,25 @@ import CardMovie from '../../components/CardMovie';
 import { Container } from './styled';
 /* Hooks */
 import { useMovies } from '../../infraestructure/hooks';
-import db from '../../firebase';
-
-const modalRoot = document.getElementById('modal-root');
-const customStyles = {
-  overflowY: 'auto',
-};
 
 const Movies = () => {
+  const [ hasMore, setHasMore ] = useState(true);
   const [ processing, setProcessing ] = useState(false);
-  const [ visible, setVisible ] = useState(false);
-  const [ movieSelected, setMovieSelected ] = useState(null);
   const {
-    isLoading,
     data,
+    filter,
     currentPage,
-    getMoviesNewsRequest
+    getMoviesNewsRequest,
+    getSearchMoviesRequest
   } = useMovies();
 
-  const handleCloseModal = () => {
-    setVisible(false);
-  };
-
   const handleLoadMore = async () => {
-    await getMoviesNewsRequest(currentPage + 1);
+    const { query } = filter;
+    if(query !== '') {
+      await getSearchMoviesRequest(currentPage + 1, query);
+    } else {
+      await getMoviesNewsRequest(currentPage + 1);
+    }
   };
 
   const load = useCallback(async () => {
@@ -56,9 +52,20 @@ const Movies = () => {
             </SkeletonTheme>
           </div>
         ) : (
-          <>
+          <InfiniteScroll
+            className="recommended__movies"
+            dataLength={data.length} //This is important field to render the next data
+            next={handleLoadMore}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{textAlign: 'center'}}>
+                <b>Not more data for loader!</b>
+              </p>
+            }
+          >
             {data.map((movie) => <CardMovie key={`movie-${movie.id}`} {...movie} /> )}
-          </>
+          </InfiniteScroll>
         )}
       </div>
       <hr />

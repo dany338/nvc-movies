@@ -27,12 +27,14 @@ export const getMoviesNewsRequest = (page) => {
       const data = await MoviesServices.apiMovies.getNewsMovies(page);
       if(typeof data === 'object' && Array.isArray(data.results)) {
         dispatch(moviesNewsListSuccess(data.results, data.total_pages, data.total_results, page));
-      } else if(typeof data === 'string') {
-        dispatch(moviesNewsListError('An error was generated please consult the administrator!'));
+        return { msg: `movie found: ${data.total_results}`, err: Number(data.total_results) === 0 ? true : false, results: data.results };
       }
+      dispatch(moviesNewsListError('An error was generated please consult the administrator!'));
+      return { msg: 'An error was generated please consult the administrator!', err: true, results: [] };
     } catch (error) {
       console.error(error);
       dispatch(moviesNewsListError('An error was generated please consult the administrator!'));
+      return { msg: 'An error was generated please consult the administrator!', err: true, results: [] };
     }
   };
 };
@@ -129,17 +131,19 @@ export const getPopularMoviesRequest = page => {
 
 export const getSearchMoviesRequest = (page, query) => {
   return async dispatch => {
-    dispatch(moviesSearchListInit(query));
+    dispatch(moviesSearchListInit());
     try {
       const data = await MoviesServices.apiMovies.searchMovies(page, query);
       if(typeof data === 'object' && Array.isArray(data.results)) {
-        dispatch(moviesSearchListSuccess(data.results, data.total_pages, data.total_results, page));
-      } else if(typeof data === 'string') {
-        dispatch(moviesSearchListError('An error was generated please consult the administrator!'));
+        dispatch(moviesSearchListSuccess(data.results, data.total_pages, data.total_results, page, query));
+        return { msg: `movie found: ${data.total_results}`, err: Number(data.total_results) === 0 ? true : false, results: data.results };
       }
+      dispatch(moviesSearchListError('An error was generated please consult the administrator!'));
+      return { msg: 'An error was generated please consult the administrator!', err: true, results: [] };
     } catch (error) {
       console.error(error);
       dispatch(moviesSearchListError('An error was generated please consult the administrator!'));
+      return { msg: 'An error was generated please consult the administrator!', err: true, results: [] };
     }
   };
 };

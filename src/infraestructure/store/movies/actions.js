@@ -35,5 +35,5 @@ export const moviesPopularListInit = () => ({ type: MOVIES_POPULAR_LIST_INIT });
 export const moviesPopularListSuccess = (data, totalPages, totalResults, page) => ({ type: MOVIES_POPULAR_LIST_SUCCESS, payload: { data, totalPages, totalResults, page } });
 export const moviesPopularListError = error => ({ type: MOVIES_POPULAR_LIST_ERROR, payload: error });
 export const moviesSearchListInit = () => ({ type: MOVIES_SEARCH_LIST_INIT });
-export const moviesSearchListSuccess = (data, totalPages, totalResults, page) => ({ type: MOVIES_SEARCH_LIST_SUCCESS, payload: { data, totalPages, totalResults, page } });
+export const moviesSearchListSuccess = (data, totalPages, totalResults, page, query) => ({ type: MOVIES_SEARCH_LIST_SUCCESS, payload: { data, totalPages, totalResults, page, query } });
 export const moviesSearchListError = error => ({ type: MOVIES_SEARCH_LIST_ERROR, payload: error });

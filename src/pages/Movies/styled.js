@@ -21,6 +21,17 @@ export const Container = styled.div`
     flex-wrap: wrap;
   }
 
+  .movies__content {
+    width: 270px;
+    margin-bottom: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #fff;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04);
+    transition: transform .2s ease-in-out,box-shadow .2s ease-in-out,-webkit-transform .2s ease-in-out;
+    border-radius: 7px;
+  }
+
   .movie__loadMore {
     display: flex;
     margin-left: 15px;

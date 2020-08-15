@@ -44,6 +44,8 @@ export const Container = styled.div`
     height: 120px !important;
     width: 120px !important;
     margin: 10px 60px;
+    object-fit: cover;
+    border-radius: 8px;
   }
 
   .movieDetail__text > h4 {

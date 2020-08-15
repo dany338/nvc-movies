@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import {
   MOVIES_NEWS_LIST_INIT,
   MOVIES_NEWS_LIST_SUCCESS,
@@ -19,12 +20,15 @@ import {
   MOVIES_SEARCH_LIST_ERROR
 } from './types';
 
+const isCookie = (typeof Cookies.get('nvc_movies') !== 'undefined');
+
 const initialState = {
   data: [],
   genres: [],
   filter: {
     query: '',
   },
+  searchs: isCookie ? JSON.parse(Cookies.get('nvc_movies')) : [],
   movieSelected: null,
   discoverGenres: [],
   totalPages: 0,
@@ -183,12 +187,17 @@ const movie = (state = initialState, { type, payload }) => {
     }
 
     case MOVIES_SEARCH_LIST_SUCCESS: {
+      const searchs = [ payload.query, ...state.searchs ];
+      Cookies.set('nvc_movies', searchs, {
+        expires: 1 // Expire one day
+      });
       return {
         ...state,
-        data: payload.data,
+        data: Number(payload.page) === 1 ? payload.data : [ ...state.data, ...payload.data],
         totalPages: payload.totalPages,
         totalResults: payload.totalResults,
         currentPage: payload.page,
+        searchs,
         isLoading: false,
         error: ''
       };
